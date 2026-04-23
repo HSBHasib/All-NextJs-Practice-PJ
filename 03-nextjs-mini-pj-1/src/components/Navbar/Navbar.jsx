@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Link, Button } from "@heroui/react";
-import { useSession } from "@/lib/auth-client";
+import { useSession, signOut } from "@/lib/auth-client";
 
 const Navbar = () => {
   const { data, isPending } = useSession();
@@ -28,11 +28,11 @@ const Navbar = () => {
           <ul className="flex items-center gap-4">
             {user ? (
               <>
-                <li className="px-4">
+                <li className="px-4 flex gap-5">
                     <p>Welcome, {user.name}</p>
-                  <Link href="/auth/singup">
+                  <Link href="/">
                    <button
-                   onClick={() => singOut()} 
+                   onClick={() => signOut()} 
                    >Sing Out</button>
                   </Link>
                 </li>
@@ -43,10 +43,6 @@ const Navbar = () => {
               <Link href="/auth/singin">Sing In</Link>
             </li></>
             )}
-
-            {/* <li className="px-4">
-              <Link href="/auth/singup">SingUp</Link>
-            </li> */}
           </ul>
         </header>
       </nav>

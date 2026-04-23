@@ -19,6 +19,7 @@ import { useState } from "react";
 
 export default function SignUpPage() {
     const [isVisible, setIsVisible]  = useState();
+    
   const onSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -33,7 +34,7 @@ export default function SignUpPage() {
     });
 
     if (error) {
-      toast.error("Opps, Data not Saved");
+      toast.error("Opps, This email address already used. please signUp with other email address.")
     }
 
     if (data) {

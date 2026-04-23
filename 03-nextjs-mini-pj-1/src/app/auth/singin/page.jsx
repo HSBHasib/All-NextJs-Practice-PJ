@@ -10,11 +10,16 @@ import {
   Input,
   Label,
   TextField,
+  InputGroup,
 } from "@heroui/react";
+import {Eye, EyeSlash} from "@gravity-ui/icons";
 import { Are_You_Serious } from "next/font/google";
 import { toast } from "react-toastify";
+import { useState } from "react";
 
 export default function SignInPage() {
+  const [isVisible, setIsVisible]  = useState();
+
   const onSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -29,11 +34,11 @@ export default function SignInPage() {
     });
 
     if (error) {
-      toast.error('Opps, Data Not Matched!');
+      toast.error("Please SignUp First.");
     }
 
-    if(data) {
-        toast.success('SingIn Successfully.')
+    if (data) {
+      toast.success("SingIn Successfully.");
     }
   };
 
@@ -60,31 +65,31 @@ export default function SignInPage() {
         </TextField>
 
         {/* passWord */}
-        <TextField
-          isRequired
-          minLength={8}
-          name="password"
-          type="password"
-          validate={(value) => {
-            if (value.length < 8) {
-              return "Password must be at least 8 characters";
-            }
-            if (!/[A-Z]/.test(value)) {
-              return "Password must contain at least one uppercase letter";
-            }
-            if (!/[0-9]/.test(value)) {
-              return "Password must contain at least one number";
-            }
-
-            return null;
-          }}
-        >
+        <TextField className="w-full " name="password">
           <Label>Password</Label>
-          <Input name="password" placeholder="Enter your password" />
-          <Description>
-            Must be at least 8 characters with 1 uppercase and 1 number
-          </Description>
-          <FieldError />
+          <InputGroup>
+            <InputGroup.Input
+              className="w-full"
+              type={isVisible ? "text" : "password"}
+              name="password"
+              placeholder="Enter Your Password"
+            />
+            <InputGroup.Suffix className="pr-0">
+              <Button
+                isIconOnly
+                aria-label={isVisible ? "Hide password" : "Show password"}
+                size="sm"
+                variant="ghost"
+                onPress={() => setIsVisible(!isVisible)}
+              >
+                {isVisible ? (
+                  <Eye className="size-4" />
+                ) : (
+                  <EyeSlash className="size-4" />
+                )}
+              </Button>
+            </InputGroup.Suffix>
+          </InputGroup>
         </TextField>
 
         <div className="flex gap-2">
